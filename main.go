@@ -8,22 +8,36 @@ import (
 func main() {
 
 	var firstNum, secondNum, symbol string
-
-	fmt.Scanln(&firstNum, &symbol, &secondNum)
+	cheker1 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
+	cheker2 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
+	fmt.Scanln(&firstNum, &symbol, &secondNum, &cheker1)
 
 	switch {
+	case cheker1 != cheker2:
+
+		fmt.Println("Ошибка: Введено больше данных(Программа принимает только пример вида '1 + 1')")
+
 	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "arabic" && whatIs(secondNum) == "arabic":
-		fmt.Println("Оба числа арабские, символ правильный. Произвожу вычисление...")
+
 		fmt.Println(counting(firstNum, symbol, secondNum))
+
 	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "rome" && whatIs(secondNum) == "rome":
-		fmt.Println("Оба числа римские, символ правильный. Произвожу вычисление...")
+
 		fmt.Println(arabicToRome(counting(romeToArabic(firstNum), symbol, romeToArabic(secondNum))))
+
+	case (whatIs(symbol) != "symbol") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic"):
+
+		fmt.Println("Ошибка: На вход поданы несоответствующие числа(0 < a <= 10), не числа, не целые числа или использован неправильный оператор")
+
+	case (whatIs(firstNum) == "rome" && whatIs(secondNum) == "arabic") || whatIs(firstNum) == "arabic" && whatIs(secondNum) == "rome":
+
+		fmt.Println("Ошибка: Одновременно используются разные системы счисления.")
 	}
 
 }
 
 func whatIs(a string) string {
-	arabicNum := [11]string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}
+	arabicNum := [11]string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}
 	romeNum := [10]string{"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"}
 	chekSymbol := [4]string{"+", "-", "*", "/"}
 
@@ -104,29 +118,64 @@ func romeToArabic(romeNum string) string {
 }
 
 func arabicToRome(arabicNum int) string {
+
+	var tensArabic, onesArabic int
+	var tensRome, onesRome string
 	var result string
 
-	switch arabicNum {
+	tensArabic = arabicNum / 10
+	onesArabic = arabicNum % 10
+
+	switch tensArabic {
 	case 1:
-		result = "I"
+		tensRome = "X"
 	case 2:
-		result = "II"
+		tensRome = "XX"
 	case 3:
-		result = "III"
+		tensRome = "XXX"
 	case 4:
-		result = "IV"
+		tensRome = "XL"
 	case 5:
-		result = "V"
+		tensRome = "L"
 	case 6:
-		result = "VI"
+		tensRome = "LX"
 	case 7:
-		result = "VII"
+		tensRome = "LXX"
 	case 8:
-		result = "VIII"
+		tensRome = "LXXX"
 	case 9:
-		result = "IX"
+		tensRome = "XC"
 	case 10:
-		result = "X"
+		tensRome = "C"
+	}
+
+	switch onesArabic {
+	case 1:
+		onesRome = "I"
+	case 2:
+		onesRome = "II"
+	case 3:
+		onesRome = "III"
+	case 4:
+		onesRome = "IV"
+	case 5:
+		onesRome = "V"
+	case 6:
+		onesRome = "VI"
+	case 7:
+		onesRome = "VII"
+	case 8:
+		onesRome = "VIII"
+	case 9:
+		onesRome = "IX"
+	case 0:
+		onesRome = ""
+	}
+
+	result = tensRome + onesRome
+
+	if arabicNum < 1 {
+		result = "Ошибка: В римской системе счисления нет отрицательных чисел и нуля"
 	}
 
 	return result
