@@ -25,7 +25,7 @@ func main() {
 
 		fmt.Println(arabicToRome(counting(romeToArabic(firstNum), symbol, romeToArabic(secondNum))))
 
-	case (whatIs(symbol) != "symbol") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic"):
+	case (whatIs(symbol) != "symbol") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic") || (whatIs(secondNum) != "rome" && whatIs(secondNum) != "arabic"):
 
 		fmt.Println("Ошибка: На вход поданы несоответствующие числа(0 < a <= 10), не числа, не целые числа или использован неправильный оператор")
 
@@ -33,7 +33,7 @@ func main() {
 
 		fmt.Println("Ошибка: Одновременно используются разные системы счисления.")
 	}
-
+	main()
 }
 
 func whatIs(a string) string {
