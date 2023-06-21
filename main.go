@@ -8,7 +8,6 @@ import (
 func main() {
 
 	var firstNum, secondNum, symbol string
-	var exit int
 	cheker1 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
 	cheker2 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
 	fmt.Scanln(&firstNum, &symbol, &secondNum, &cheker1)
@@ -33,12 +32,6 @@ func main() {
 	case (whatIs(firstNum) == "rome" && whatIs(secondNum) == "arabic") || whatIs(firstNum) == "arabic" && whatIs(secondNum) == "rome":
 
 		fmt.Println("Ошибка: Одновременно используются разные системы счисления.")
-	}
-
-	fmt.Println("Если хотите продолжить - введите 1. При любом другом вводе программа будет завершена")
-	fmt.Scan(&exit)
-	if exit == 1 {
-		main()
 	}
 
 }
