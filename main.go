@@ -7,31 +7,46 @@ import (
 
 func main() {
 
-	var firstNum, secondNum, symbol string
-	cheker1 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
-	cheker2 := "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
+	var (
+		cheker1   string = "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
+		cheker2   string = "Я не придумал как это сделать по-другому, поэтому я сделал эту переменную чтобы проверять не введено-ли что-то еще после примера. Обязательно придумаю позже"
+		error1    string = "Ошибка: Введено больше данных(Программа принимает только пример вида '1 + 1')"
+		error2    string = "Ошибка: На вход поданы несоответствующие числа [1:10], не числа, не целые числа или использован неправильный оператор"
+		error3    string = "Ошибка: Одновременно используются разные системы счисления."
+		error4    string = "Ошибка: В римской системе счисления нет отрицательных чисел и нуля"
+		firstNum  string
+		secondNum string
+		symbol    string
+	)
+
 	fmt.Scanln(&firstNum, &symbol, &secondNum, &cheker1)
+
+	var answer int = counting(firstNum, symbol, secondNum)
 
 	switch {
 	case cheker1 != cheker2:
 
-		fmt.Println("Ошибка: Введено больше данных(Программа принимает только пример вида '1 + 1')")
-
-	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "arabic" && whatIs(secondNum) == "arabic":
-
-		fmt.Println(counting(firstNum, symbol, secondNum))
-
-	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "rome" && whatIs(secondNum) == "rome":
-
-		fmt.Println(arabicToRome(counting(romeToArabic(firstNum), symbol, romeToArabic(secondNum))))
+		fmt.Println(error1)
 
 	case (whatIs(symbol) != "symbol") || (whatIs(firstNum) != "rome" && whatIs(firstNum) != "arabic") || (whatIs(secondNum) != "rome" && whatIs(secondNum) != "arabic"):
 
-		fmt.Println("Ошибка: На вход поданы несоответствующие числа(0 < a <= 10), не числа, не целые числа или использован неправильный оператор")
+		fmt.Println(error2)
 
 	case (whatIs(firstNum) == "rome" && whatIs(secondNum) == "arabic") || whatIs(firstNum) == "arabic" && whatIs(secondNum) == "rome":
 
-		fmt.Println("Ошибка: Одновременно используются разные системы счисления.")
+		fmt.Println(error3)
+
+	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "rome" && whatIs(secondNum) == "rome" && answer < 1:
+
+		fmt.Println(error4)
+
+	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "arabic" && whatIs(secondNum) == "arabic":
+
+		fmt.Println(answer)
+
+	case whatIs(symbol) == "symbol" && whatIs(firstNum) == "rome" && whatIs(secondNum) == "rome" && answer > 0:
+
+		fmt.Println(arabicToRome(answer))
 	}
 
 }
@@ -69,6 +84,11 @@ func whatIs(a string) string {
 
 func counting(firstNum, symbol, secondNum string) int {
 
+	if whatIs(firstNum) == "rome" && whatIs(secondNum) == "rome" {
+		firstNum = romeToArabic(firstNum)
+		secondNum = romeToArabic(secondNum)
+	}
+
 	trueFirstNum, _ := strconv.Atoi(firstNum)
 	trueSecondNum, _ := strconv.Atoi(secondNum)
 
@@ -87,6 +107,7 @@ func counting(firstNum, symbol, secondNum string) int {
 
 	return result
 }
+
 func romeToArabic(romeNum string) string {
 
 	var result string
@@ -173,10 +194,6 @@ func arabicToRome(arabicNum int) string {
 	}
 
 	result = tensRome + onesRome
-
-	if arabicNum < 1 {
-		result = "Ошибка: В римской системе счисления нет отрицательных чисел и нуля"
-	}
 
 	return result
 }
