@@ -59,23 +59,23 @@ func whatIs(a string) string {
 	var cheker string
 
 	for _, v := range arabicNum {
-		switch {
-		case v == a:
+		if v == a {
 			cheker = "arabic"
+			break
 		}
 	}
 
 	for _, v := range romeNum {
-		switch {
-		case v == a:
+		if v == a {
 			cheker = "rome"
+			break
 		}
 	}
 
 	for _, v := range chekSymbol {
-		switch {
-		case v == a:
+		if v == a {
 			cheker = "symbol"
+			break
 		}
 	}
 
